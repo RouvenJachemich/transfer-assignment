@@ -1,0 +1,28 @@
+name: Spellcheck Action
+
+# Wann soll diese Action ausgeführt werden?
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checke das Repository aus
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Installiere misspell und führe die Rechtschreibprüfung durch
+      - name: Run spellcheck
+        uses: reviewdog/action-misspell@v1
+        with:
+          locale: "US"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
